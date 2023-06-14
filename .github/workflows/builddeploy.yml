@@ -21,6 +21,11 @@ env:
   REGISTRY:  "registry.digitalocean.com/mathrebcicd"     #"your-digitalocean-registry-container-url"
   IMAGE_NAME: "mathreb_cicd"
 
+permissions:
+  contents: 'read'
+  id-token: 'write'
+  issues: 'write' #__This fixed the HttpError: Resource not accessible by integration  
+
 #3
 jobs:
   build_and_push:
