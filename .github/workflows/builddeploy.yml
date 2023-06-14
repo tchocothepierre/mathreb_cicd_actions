@@ -87,5 +87,5 @@ jobs:
       - name: Send Slack notification
         run: |
           curl -X POST -H 'Content-type: application/json' \
-              --data '{"text":"A new release is out now !!"}'
+              --data '{"text":"A new release has been created for image: (echo $IMAGE_NAME)"}' \
               ${{secrets.SLACK_WEBHOOK}} 
