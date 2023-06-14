@@ -16,7 +16,7 @@ on:
 #2
 env:
   REGISTRY:  "registry.digitalocean.com/mathrebcicd"     #"your-digitalocean-registry-container-url"
-  IMAGE_NAME: "your-docker-image-name"
+  IMAGE_NAME: "mathreb_cicd"
 
 #3
 jobs:
