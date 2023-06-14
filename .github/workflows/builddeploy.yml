@@ -92,4 +92,4 @@ jobs:
         run: |
           curl -X POST -H 'Content-type: application/json' \
               --data '{"text":"A new release his out now !!"}'
-              ${{secrets.SLACK_WEBHOOK}}   
+              https://hooks.slack.com/services/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   
