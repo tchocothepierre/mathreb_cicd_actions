@@ -73,7 +73,6 @@ jobs:
             whoami
             ls -al
       - name: Create release
-        if: github.event_name == 'push' && github.ref == 'refs/head/main/'
         id: create_release
         uses: actions/create-release@v1.1.4
         env:
@@ -87,5 +86,5 @@ jobs:
       - name: Send Slack notification
         run: |
           curl -X POST -H 'Content-type: application/json' \
-              --data '{"text":"A new release has been created for image: (echo $IMAGE_NAME)"}' \
+              --data '{"text":"A new release has been created for image: $(echo $IMAGE_NAME)"}'
               ${{secrets.SLACK_WEBHOOK}} 
