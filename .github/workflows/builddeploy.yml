@@ -5,7 +5,7 @@ name: CI
 on:
   # Triggers the workflow on push events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -15,7 +15,7 @@ on:
         required: true
 #2
 env:
-  REGISTRY: "your-digitalocean-registry-container-url"
+  REGISTRY:  "registry.digitalocean.com/mathrebcicd"     #"your-digitalocean-registry-container-url"
   IMAGE_NAME: "your-docker-image-name"
 
 #3
@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo 
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         
       - name: Build container image
         run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7) .
@@ -35,7 +35,7 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
-        run: doctl registry login --expiry-seconds 600
+        run: doctl registry login --expiry-seconds 800
       
       - name: Remove all old images
         run: if [ ! -z "$(doctl registry repository list | grep "$(echo $IMAGE_NAME)")" ]; then doctl registry repository delete-manifest $(echo $IMAGE_NAME) $(doctl registry repository list-tags $(echo $IMAGE_NAME) | grep -o "sha.*") --force; else echo "No repository"; fi
