@@ -77,19 +77,6 @@ jobs:
             $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
             whoami
             ls -al
-      #- name: Create release
-        #id: create_release
-        #uses: actions/create-release@v1
-        #env:
-          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #with:
-          #tag_name: ${{ github.ref }}
-          #release_name: Release ${{ github.ref }}
-          #draft: false
-          #prerelease: false
-    
-      - name: Send Slack notification
-        run: |
-          curl -X POST -H 'Content-type: application/json' \
-              --data '{"text":"A new release has been created for image: $(echo $IMAGE_NAME)"}'
-              ${{secrets.SLACK_WEBHOOK}}   
+     - name: Send Slack notification
+       run: | 
+         curl -X POST -H 'Content-type: application/json' --data '{"text":"A new release is out !!"}' https://hooks.slack.com/services/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
