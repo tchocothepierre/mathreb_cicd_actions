@@ -4,6 +4,9 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push events but only for the master branch
+  #pull_request:
+    #branches: [develop, master]
+  
   push:
     branches: [ main ]
 
@@ -69,3 +72,20 @@ jobs:
             $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
             whoami
             ls -al
+      - name: Create release
+        if: github.event_name == 'push' && github.ref == 'refs/head/main/'
+        id: create_release
+        uses: actions/create-release@v1.1.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+    
+      - name: Send Slack notification
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+              --data '{"text":"A new release has been created for image: (echo $IMAGE_NAME)"}' \
+              ${{secrets.SLACK_WEBHOOK}} 
