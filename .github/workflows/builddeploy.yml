@@ -54,7 +54,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}   
           key: ${{ secrets.SSHKEY }}
-          #passphrase: ${{ secrets.PASSPHRASE }}
+          passphrase: ${{ secrets.PASSPHRASE }}
           envs: IMAGE_NAME,REGISTRY,{{ secrets.DIGITALOCEAN_ACCESS_TOKEN }},GITHUB_SHA
           script: |
             # Login to registry
@@ -63,7 +63,7 @@ jobs:
             docker stop $(echo $IMAGE_NAME)
             # Remove old container  
             docker rm $(echo $IMAGE_NAME)  
-            # Run a new container from a new image
+            # Run a new container from a new image  
             docker run -d \
             --restart always \
             --name $(echo $IMAGE_NAME) \
