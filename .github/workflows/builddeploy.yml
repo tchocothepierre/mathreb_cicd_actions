@@ -19,7 +19,7 @@ on:
 #2
 env:
   REGISTRY:  "registry.digitalocean.com/mathrebcicd"     #"your-digitalocean-registry-container-url"
-  IMAGE_NAME: "mathreb_cicd"
+  IMAGE_NAME: "Mathreb_API"
 
 #3
 jobs:
@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Build container image
-        run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7) .
+        run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7) . 
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
@@ -77,5 +77,5 @@ jobs:
       - name: Send Slack notification
         run: |
           curl -X POST -H 'Content-type: application/json' \
-              --data '{"text":"A new release has been created for image: (echo $IMAGE_NAME)"}' \
+              --data '{"text":"A new release is now out"}' \
               ${{secrets.SLACK_WEBHOOK}} 
