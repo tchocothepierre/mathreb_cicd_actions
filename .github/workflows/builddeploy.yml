@@ -26,7 +26,7 @@ on:
 #2
 env:
   REGISTRY:  "registry.digitalocean.com/mathrebcicd"     #"your-digitalocean-registry-container-url"
-  IMAGE_NAME: "mathreb"
+  IMAGE_NAME: "mathreb-${{ inputs.environment}}"
 
 #3
 jobs:
@@ -40,7 +40,7 @@ jobs:
         run: cat branch.txt  
         
       - name: Build container image
-        run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME)-${{ inputs.environment}}:latest .
+        run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME):latest .
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
@@ -54,7 +54,7 @@ jobs:
         run: if [ ! -z "$(doctl registry repository list | grep "$(echo $IMAGE_NAME)")" ]; then doctl registry repository delete-manifest $(echo $IMAGE_NAME) $(doctl registry repository list-tags $(echo $IMAGE_NAME) | grep -o "sha.*") --force; else echo "No repository"; fi
 
       - name: Push image to DigitalOcean Container Registry
-        run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME)-${{ inputs.environment}}:latest
+        run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME):latest
         
  # deploy:
  #   runs-on: ubuntu-latest
