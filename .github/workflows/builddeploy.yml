@@ -13,8 +13,15 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Image version'
+      environment:
+        description: "Choissisez l'environement"
+        type: choice
+        default: DEV
+        options:
+          - DEV
+          - RECETTE
+          - LIVRAISON 
+          - FORMATION
         required: true
 #2
 env:
