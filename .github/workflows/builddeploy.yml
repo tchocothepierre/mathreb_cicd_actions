@@ -28,6 +28,9 @@ jobs:
     steps:
       - name: Checkout the repo 
         uses: actions/checkout@v3
+
+      - name: Cast a branch
+        run: cat branch.txt  
         
       - name: Build container image
         run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME):latest .
