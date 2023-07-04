@@ -16,12 +16,12 @@ on:
       environment:
         description: "Choissisez l'environement" 
         type: choice
-        default: DEV
+        default: dev
         options:
-          - DEV
-          - RECETTE
-          - LIVRAISON 
-          - FORMATION
+          - dev
+          - recette
+          - livraison 
+          - formation
         required: true
 #2
 env:
